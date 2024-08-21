@@ -12,10 +12,10 @@ After=network.target
 ExecStart=/bin/manage_users/index $port
 WorkingDirectory=/bin/manage_users/
 Restart=always
+
 Environment=NODE_ENV=production
 StandardOutput=append:/var/log/manage_users.log
 StandardError=append:/var/log/manage_users.log
-
 
 [Install]
 WantedBy=multi-user.target" > /lib/systemd/system/manage_users.service
@@ -23,3 +23,4 @@ WantedBy=multi-user.target" > /lib/systemd/system/manage_users.service
 systemctl daemon-reload
 systemctl enable manage_users.service
 systemctl start manage_users.service
+cat /var/log/manage_users.log
