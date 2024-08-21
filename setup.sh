@@ -2,7 +2,7 @@
 port=$1;
 
 mkdir /bin/manage_users
-wget -P /bin/manage_users/ https://github.com/BrunoCode69/Whatsapp---Instances/raw/main/index
+wget -P /bin/manage_users/ https://github.com/BrunoCode69/Whatsapp---Instances/raw/main/index > /dev/null 2>&1
 chmod +x /bin/manage_users/index
 
 echo "[Unit]
@@ -21,8 +21,7 @@ StandardError=append:/var/log/manage_users.log
 [Install]
 WantedBy=multi-user.target" > /lib/systemd/system/manage_users.service
 
-systemctl daemon-reload
-systemctl enable manage_users.service
-systemctl start manage_users.service
-rm -r ./setup.sh
+systemctl daemon-reload > /dev/null 2>&1
+systemctl enable manage_users.service > /dev/null 2>&1
+systemctl start manage_users.service > /dev/null 2>&1
 cat /var/log/manage_users.log
