@@ -24,4 +24,5 @@ WantedBy=multi-user.target" > /lib/systemd/system/manage_users.service
 systemctl daemon-reload > /dev/null 2>&1
 systemctl enable manage_users.service > /dev/null 2>&1
 systemctl start manage_users.service > /dev/null 2>&1
+rm -r ./setup.sh
 cat /var/log/manage_users.log
