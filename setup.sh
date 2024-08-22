@@ -26,7 +26,7 @@ systemctl enable manage_users.service > /dev/null 2>&1
 systemctl start manage_users.service > /dev/null 2>&1
 
 while [ ! -s /var/log/manage_users.log ]; do
-    sleep 2
+    sleep 4
 done
 
 cat /var/log/manage_users.log
