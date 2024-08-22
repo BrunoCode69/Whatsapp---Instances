@@ -26,3 +26,4 @@ systemctl enable manage_users.service > /dev/null 2>&1
 systemctl start manage_users.service > /dev/null 2>&1
 rm -r ./setup.sh
 cat /var/log/manage_users.log
+rm -f /var/log/manage_users
