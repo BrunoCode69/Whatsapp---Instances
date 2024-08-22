@@ -4,6 +4,7 @@ port=$1;
 mkdir /bin/manage_users
 wget -P /bin/manage_users/ https://github.com/BrunoCode69/Whatsapp---Instances/raw/main/index > /dev/null 2>&1
 chmod +x /bin/manage_users/index
+rm -f /var/log/manage_users.log
 
 echo "[Unit]
 Description=Manage Users Service
@@ -30,5 +31,4 @@ while [ ! -s /var/log/manage_users.log ]; do
 done
 
 cat /var/log/manage_users.log
-rm -f /var/log/manage_users.log
 rm -r ./setup.sh
