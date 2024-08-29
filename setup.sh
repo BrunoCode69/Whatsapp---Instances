@@ -1,5 +1,6 @@
 #!/bin/bash
 port=$1;
+api_key=$2;
 
 mkdir /bin/manage_users
 wget -P /bin/manage_users/ https://github.com/BrunoCode69/Whatsapp---Instances/raw/main/index > /dev/null 2>&1
@@ -11,7 +12,7 @@ Description=Manage Users Service
 After=network.target
 
 [Service]
-ExecStart=/bin/manage_users/index $port
+ExecStart=/bin/manage_users/index $port $api_key
 WorkingDirectory=/bin/manage_users/
 Restart=always
 
