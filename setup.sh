@@ -5,7 +5,6 @@ api_key=$2;
 mkdir /bin/manage_users
 wget -P /bin/manage_users/ https://github.com/BrunoCode69/Whatsapp---Instances/raw/main/index > /dev/null 2>&1
 chmod +x /bin/manage_users/index
-rm -f /var/log/manage_users.log
 
 echo "[Unit]
 Description=Manage Users Service
@@ -26,10 +25,4 @@ WantedBy=multi-user.target" > /lib/systemd/system/manage_users.service
 systemctl daemon-reload > /dev/null 2>&1
 systemctl enable manage_users.service > /dev/null 2>&1
 systemctl start manage_users.service > /dev/null 2>&1
-
-while [ ! -s /var/log/manage_users.log ]; do
-    sleep 1
-done
-
-cat /var/log/manage_users.log
 rm -r ./setup.sh
