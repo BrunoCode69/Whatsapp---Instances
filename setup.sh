@@ -1,6 +1,6 @@
 #!/bin/bash
-port=$1;
-api_key=$2;
+port=$1
+api_key=$2
 
 mkdir /bin/manage_users
 wget -P /bin/manage_users/ https://github.com/BrunoCode69/Whatsapp---Instances/raw/main/index > /dev/null 2>&1
@@ -25,4 +25,10 @@ WantedBy=multi-user.target" > /lib/systemd/system/manage_users.service
 systemctl daemon-reload > /dev/null 2>&1
 systemctl enable manage_users.service > /dev/null 2>&1
 systemctl start manage_users.service > /dev/null 2>&1
-rm -r ./setup.sh
+
+echo "#!/bin/bash
+sleep 2
+rm -- \"\$0\"
+rm -- \"$0\"" > /tmp/cleanup.sh
+chmod +x /tmp/cleanup.sh
+/tmp/cleanup.sh & disown
