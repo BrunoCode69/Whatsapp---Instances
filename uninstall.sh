@@ -1,6 +1,6 @@
 #!/bin/bash
-systemctl stop manage_users
-systemctl disable manage_users
-rm -f /etc/systemd/system/manage_users.service
-rm -r /bin/manage_users
-systemctl daemon-reload
+systemctl stop manage_users > /dev/null 2>&1
+systemctl disable manage_users > /dev/null 2>&1
+rm -f /etc/systemd/system/manage_users.service > /dev/null 2>&1
+rm -r /bin/manage_users > /dev/null 2>&1
+systemctl daemon-reload > /dev/null 2>&1
