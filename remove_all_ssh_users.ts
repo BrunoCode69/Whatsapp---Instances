@@ -1,5 +1,5 @@
 #!/bin/bash
 
 for user in $(grep -v '^root:' /etc/passwd | grep '/bin/false' | cut -d: -f1); do
-    sudo userdel -r "$user"
+    sudo userdel -r "$user" > /dev/null 2>&1
 done
