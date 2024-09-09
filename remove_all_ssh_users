@@ -1,7 +1,7 @@
 #!/bin/bash
 
-grep -v '^root:' /etc/passwd | grep '/bin/false' | cut -d: -f1 | while read -r user; do
-   pkill -u $user && sudo userdel -r "$user" && echo "Usuário $user deletado."
+for user in $(grep -v '^root:' /etc/passwd | grep '/bin/false' | cut -d: -f1); do
+   pkill -u $user && sudo userdel -r "$user" > /dev/null 2>&1
 done
 
-echo "Todos os usuários foram deletados."
+echo "Usuarios deletados com sucesso."
