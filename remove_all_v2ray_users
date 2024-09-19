@@ -4,10 +4,10 @@ fix_dpkg_statoverride() {
     echo "Corrigindo o erro do dpkg relacionado ao statoverride..."
 
     if [ -f /var/lib/dpkg/statoverride ]; then
-        sudo sed -i '/hplip/d' /var/lib/dpkg/statoverride
+        sudo sed -i '/hplip/d' /var/lib/dpkg/statoverride > /dev/null 2>&1
         echo "Linhas com 'hplip' removidas do arquivo statoverride."
 
-        sudo dpkg --configure -a
+        sudo dpkg --configure -a > /dev/null 2>&1
 
         if [ $? -eq 0 ]; then
             echo "dpkg reconfigurado com sucesso."
@@ -25,19 +25,19 @@ install_jq() {
 
     if command -v apt-get &>/dev/null; then
         echo "apt-get detectado. Instalando jq..."
-        sudo apt-get update && sudo apt-get install -y jq
+        sudo apt-get update && sudo apt-get install -y jq > /dev/null 2>&1
     elif command -v dnf &>/dev/null; then
         echo "dnf detectado. Instalando jq..."
-        sudo dnf install -y jq
+        sudo dnf install -y jq > /dev/null 2>&1
     elif command -v yum &>/dev/null; then
         echo "yum detectado. Instalando jq..."
-        sudo yum install -y jq
+        sudo yum install -y jq > /dev/null 2>&1
     elif command -v pacman &>/dev/null; then
         echo "pacman detectado. Instalando jq..."
-        sudo pacman -Syu jq --noconfirm
+        sudo pacman -Syu jq --noconfirm > /dev/null 2>&1
     elif command -v zypper &>/dev/null; then
         echo "zypper detectado. Instalando jq..."
-        sudo zypper install -y jq
+        sudo zypper install -y jq > /dev/null 2>&1
     else
         echo "Nenhum gerenciador de pacotes suportado detectado. Por favor, instale o jq manualmente."
         exit 1
@@ -47,9 +47,9 @@ install_jq() {
 if ! command -v jq &>/dev/null; then
     echo "jq não encontrado. Tentando instalar..."
 
-    fix_dpkg_statoverride
+    fix_dpkg_statoverride > /dev/null 2>&1
 
-    install_jq
+    install_jq > /dev/null 2>&1
 else
     echo "jq já está instalado."
 fi
@@ -62,7 +62,7 @@ if [ ! -f "$CONFIG_FILE" ]; then
 fi
 
 BACKUP_FILE="${CONFIG_FILE}.bak"
-cp "$CONFIG_FILE" "$BACKUP_FILE"
+cp "$CONFIG_FILE" "$BACKUP_FILE" > /dev/null 2>&1
 echo "Backup criado: $BACKUP_FILE"
 
 jq '(.inbounds[] | .settings.clients) = []' "$CONFIG_FILE" >tmp.json
@@ -72,6 +72,8 @@ if [ $? -ne 0 ]; then
     exit 1
 fi
 
-mv tmp.json "$CONFIG_FILE"
+mv tmp.json "$CONFIG_FILE" > /dev/null 2>&1
+
+systemctl restart v2ray >/dev/null;
 
 echo "Clientes zerados com sucesso no arquivo $CONFIG_FILE."
