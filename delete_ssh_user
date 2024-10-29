@@ -1,19 +1,23 @@
 #!/bin/bash
 
-local username="$1"
+username="$1"
 
-    if ! id "$username" &>/dev/null; then
-        return 0
-    fi
+# Verifica se o usuário existe
+if ! id "$username" &>/dev/null; then
+    echo "User does not exist."
+    exit 0
+fi
 
-    if who | grep -q "^$username\b"; then
-        pkill -KILL -u "$username"
-    fi
+# Verifica se o usuário está logado e derruba a sessão se estiver
+if who | grep -q "^$username\b"; then
+    echo "User is online. Terminating session..."
+    pkill -KILL -u "$username"
+fi
 
-    # Tenta deletar o usuário
-    if userdel "$username"; then
-        echo "success"
-    else
-        return 1
-    fi
-}
+# Tenta deletar o usuário
+if userdel "$username"; then
+    echo "User deleted successfully."
+else
+    echo "Failed to delete user."
+    exit 1
+fi
