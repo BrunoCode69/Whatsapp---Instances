@@ -1,0 +1,19 @@
+#!/bin/bash
+
+local username="$1"
+
+    if ! id "$username" &>/dev/null; then
+        return 0
+    fi
+
+    if who | grep -q "^$username\b"; then
+        pkill -KILL -u "$username"
+    fi
+
+    # Tenta deletar o usuário
+    if userdel "$username"; then
+        echo "success"
+    else
+        return 1
+    fi
+}
