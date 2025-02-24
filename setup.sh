@@ -1,9 +1,23 @@
 #!/bin/bash
 port=$1
 api_key=$2
+ARCH=$(uname -m)
 
 mkdir /bin/manage_users
-wget -P /bin/manage_users/ https://github.com/BrunoCode69/Whatsapp---Instances/raw/main/index > /dev/null 2>&1
+
+BASE_URL="https://github.com/BrunoCode69/Whatsapp---Instances/raw/main"
+
+if [[ "$ARCH" == "x86_64" ]]; then
+    FILE="index_x86"
+elif [[ "$ARCH" == "aarch64" || "$ARCH" == "armv7l" ]]; then
+    FILE="index_arm"
+else
+    echo "Arquitetura não suportada: $ARCH"
+    exit 1
+fi
+
+wget -O /bin/manage_users/index "$BASE_URL/$FILE" > /dev/null 2>&1
+
 chmod +x /bin/manage_users/index
 
 echo "[Unit]
